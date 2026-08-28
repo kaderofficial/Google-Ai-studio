@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -28,6 +29,7 @@ import com.example.data.model.WebProject
 import com.example.ui.theme.*
 import com.example.ui.viewmodel.AppTab
 import com.example.ui.viewmodel.WebToApkViewModel
+import com.example.util.ZipExporter
 
 @Composable
 fun DashboardScreen(
@@ -392,6 +394,7 @@ private fun ProjectCardItem(
     onCode: () -> Unit,
     onDelete: () -> Unit
 ) {
+    val context = LocalContext.current
     var showDeleteConfirm by remember { mutableStateOf(false) }
 
     Surface(
@@ -542,7 +545,26 @@ private fun ProjectCardItem(
                     ) {
                         Icon(Icons.Default.Code, contentDescription = null, modifier = Modifier.size(14.dp))
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text("Export Code", fontSize = 12.sp)
+                        Text("Code", fontSize = 12.sp)
+                    }
+
+                    FilledTonalButton(
+                        onClick = {
+                            ZipExporter.shareZipFile(context, project)
+                        },
+                        shape = RoundedCornerShape(8.dp),
+                        colors = ButtonDefaults.filledTonalButtonColors(
+                            containerColor = Slate800,
+                            contentColor = IndigoPrimary
+                        ),
+                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
+                        modifier = Modifier
+                            .height(32.dp)
+                            .testTag("quick_zip_button_${project.id}")
+                    ) {
+                        Icon(Icons.Default.FolderZip, contentDescription = null, modifier = Modifier.size(14.dp))
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text("ZIP", fontSize = 12.sp, fontWeight = FontWeight.Bold)
                     }
                 }
 
