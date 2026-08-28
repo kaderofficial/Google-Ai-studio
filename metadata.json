@@ -1,0 +1,6 @@
+{
+  "name": "Web to APK Builder",
+  "description": "Convert web apps and AI Studio sites into fully-featured Android APK packages with live preview, manifest builder, offline caching, and gradle export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
